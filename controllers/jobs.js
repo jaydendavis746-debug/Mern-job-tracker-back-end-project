@@ -32,7 +32,7 @@ router.get("/", verifyToken, async (req, res) => {
         res.status(200).json(jobs);
 
     } catch(err){
-        res.status(500).josn({err: err.message});
+        res.status(500).json({err: err.message});
     }
 });
 
