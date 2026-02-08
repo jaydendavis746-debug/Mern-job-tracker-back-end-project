@@ -157,5 +157,25 @@ router.put("/:jobId/notes/:noteId", verifyToken, async (req, res)=>{
     }
 });
 
+router.delete("/:jobId/notes/:noteId", verifyToken, async (req, res) => {
+    try {
+        const job = await Job.findById(req.params.jobId);
+
+        if (!job) {
+            return res.status(403).json({ message: "You are not authorised to edit this note" });
+        }
+
+        const note = job.notes.id(req.params.noteId);
+        note.text = req.body.text;
+
+        job.notes.remove({ _id: req.params.noteId });
+        await job.save();
+
+        res.status(200).json({ message: "Note deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
+});
+
 
 module.exports = router;
