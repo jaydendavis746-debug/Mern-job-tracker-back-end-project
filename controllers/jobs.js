@@ -10,11 +10,11 @@ router.post("/", verifyToken, async (req, res )=>{
     try{
         req.body.employee = req.user._id;
 
-        const jobs = await Job.create(req.body);
+        const job = await Job.create(req.body);
 
-        jobs._doc.employee = req.user;
+        job._doc.employee = req.user;
 
-        res.status(201).json(jobs);
+        res.status(201).json(job);
 
     } catch(err){
 
