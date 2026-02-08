@@ -16,76 +16,75 @@ const noteSchema = new mongoose.Schema({
  example  */
 
 const jobSchema = new mongoose.Schema(
-{
-   
+    {
+    
 
-    position: {
-        type: String,
-        required: true,
-        trim: true
-    },
+        position: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    companyName: {
-        type: String,
-        required: true,
-        trim: true   
-    },
+        companyName: {
+            type: String,
+            required: true,
+            trim: true   
+        },
 
-    salary: {
-        type: Number,
-        min: 0
-    },
+        salary: {
+            type: Number,
+            min: 0
+        },
 
-    jobType: {
-        type: String,
-        enum: ["Full-Time", "Part-Time", "Contract", "Internship", "Temporary"],
-        required: true
-    },
+        jobType: {
+            type: String,
+            enum: ["Full-Time", "Part-Time", "Contract", "Internship", "Temporary"],
+            required: true
+        },
 
-    workArrangement:{
-        type: String,
-        enum: ["Remote", "In-person", "Hybrid"],
-        required: true,
-    },
+        workArrangement: {
+            type: String,
+            enum: ["Remote", "In-person", "Hybrid"],
+            required: true,
+        },
 
-    location: {
-        type: String,
-        trim: true
-    },
+        location: {
+            type: String,
+            trim: true
+        },
 
-    description: {
-        type: String,
-        required: true
-    },
+        description: {
+            type: String,
+            required: true
+        },
 
-    employer: {
-        type: String,
-        required: true,
-        trim: true,
-    },
+        employer: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+
+        
+        status: {
+            type: String,
+            enum: ["Applied", "Interviewing", "Offer", "Rejected", "Prospective"],
+            default: "Prospective",
+        },
+
+        employee: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
 
     
-    status: {
-        type: String,
-        enum: ["Applied", "Interviewing", "Offer", "Rejected", "Prospective"],
-        default: "Prospective",
+        notes: [noteSchema]
+
     },
+    { timestamps: true }
+);
 
-    employee: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
+const Job = mongoose.model("Job", jobSchema);
 
- 
-    notes: [noteSchema]
-
-},
-{
-    timestamps: true
-});
-
-const Job =  mongoose.model("Job", jobSchema);
-
-module.exports = Job
+module.exports = Job;
 

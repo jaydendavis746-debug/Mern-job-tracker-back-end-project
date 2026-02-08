@@ -22,7 +22,7 @@ router.post("/", verifyToken, async (req, res )=>{
     }
 
 
-})
+});
 
 
 router.get("/", verifyToken, async (req, res) => {
@@ -34,7 +34,7 @@ router.get("/", verifyToken, async (req, res) => {
     } catch(err){
         res.status(500).josn({err: err.message});
     }
-    })
+});
 
 
 router.get("/:jobId", verifyToken, async (req, res)=>{
@@ -43,7 +43,7 @@ router.get("/:jobId", verifyToken, async (req, res)=>{
 
         if(!job){
 
-           return  res.status(400).json({message: "Job not found "});
+           return  res.status(400).json({message: "Job not found"});
         } 
 
         res.status(200).json(job);
@@ -52,7 +52,7 @@ router.get("/:jobId", verifyToken, async (req, res)=>{
 
         res.status(500).json({err: err.message});
     }
-})
+});
 
 
 router.put("/:jobId", verifyToken, async (req, res)=>{
@@ -62,7 +62,7 @@ router.put("/:jobId", verifyToken, async (req, res)=>{
 
         if(!updatedJob){
 
-          return   res.status(404).json({message: "You are unathourised for this action!"});
+          return   res.status(404).json({message: "You are not authorised for this action!"});
         }
 
         res.status(200).json(updatedJob);
@@ -72,7 +72,7 @@ router.put("/:jobId", verifyToken, async (req, res)=>{
         res.status(500).json({err: err.message});
 
     }
-})
+});
 
 
 router.delete("/:jobId", verifyToken, async (req, res)=>{
@@ -81,7 +81,7 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
         const deletedJob = await Job.findOneAndDelete({"_id" : req.params.jobId, "employee" : req.user._id});
 
         if(!deletedJob){
-           return res.status(403).json({message : "You are not authourised to delete this!"});
+           return res.status(403).json({message : "You are not authorised to delete this!"});
         }
     
         res.status(200).json(deletedJob);
@@ -91,7 +91,7 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
         res.status(500).json({err: err.message});
     }
 
-})
+});
 
 router.post("/:jobId/notes", verifyToken, async (req, res)=>{
     try{
@@ -119,9 +119,9 @@ router.post("/:jobId/notes", verifyToken, async (req, res)=>{
 
     } catch(err){
 
-        res.status(500).json({err: err.message });
+        res.status(500).json({err: err.message});
     }
-})
+});
 
 
 router.put("/:jobId/notes/:noteId", verifyToken, async (req, res)=>{
@@ -129,7 +129,7 @@ router.put("/:jobId/notes/:noteId", verifyToken, async (req, res)=>{
           const job = await Job.findOne( {"_id" : req.params.jobId, "employee" : req.user._id} );
 
         if (!job) {
-            return res.status(403).json({ message: "You are not authorised to edit this note " });
+            return res.status(403).json({ message: "You are not authorised to edit this note" });
         }
         
         const note = job.notes.id(req.params.noteId);
@@ -144,7 +144,7 @@ router.put("/:jobId/notes/:noteId", verifyToken, async (req, res)=>{
 
         res.status(500).json({err : err.message})
     }
-})
+});
 
 
 module.exports = router;
