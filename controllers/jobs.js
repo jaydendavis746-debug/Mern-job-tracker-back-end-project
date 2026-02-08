@@ -42,8 +42,8 @@ router.get("/:jobId", verifyToken, async (req, res)=>{
         const job = await Job.findOne( {"_id" : req.params.jobId, "employee" : req.user._id} ).populate("employee");
 
         if(!job){
-
-           return  res.status(400).json({message: "Job not found"});
+//? Does below work better as: <return res.status(400).send({message: "Job not found"})>
+           return res.status(400).json({message: "Job not found"});
         } 
 
         res.status(200).json(job);
@@ -69,7 +69,7 @@ router.put("/:jobId", verifyToken, async (req, res)=>{
             }).populate("employee");
 
         if(!updatedJob){
-
+//? Does below work better as: <return res.status(404).send({message: "You are not authorised for this action!"})>
           return res.status(404).json({message: "You are not authorised for this action!"});
         }
 
@@ -89,6 +89,7 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
         const deletedJob = await Job.findOneAndDelete({"_id" : req.params.jobId, "employee" : req.user._id});
 
         if(!deletedJob){
+//? Does below work better as: <return res.status(403).send({message : "You are not authorised to delete this!"})>
            return res.status(403).json({message : "You are not authorised to delete this!"});
         }
     
