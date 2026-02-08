@@ -108,10 +108,12 @@ router.post("/:jobId/notes", verifyToken, async (req, res)=>{
         const job = await Job.findOne( {"_id" : req.params.jobId, "employee" : req.user._id} );
 
         if (!job) {
+//? Does below work better as: <return res.status(404).send[...]>
             return res.status(404).json({ message: "Job not found" });
         }
 
         if (!req.body.text) {
+//? Does below work better as: <return res.status(400).send[...]>
             return res.status(400).json({ message: "Note text is required" });
         }
 
@@ -121,9 +123,9 @@ router.post("/:jobId/notes", verifyToken, async (req, res)=>{
 
         await job.save();
 
-        const newNote = job.notes[job.notes.length -1]
+        const newNote = job.notes[job.notes.length -1];
 
-        res.status(201).json(newNote)
+        res.status(201).json(newNote);
 
 
     } catch(err){
@@ -147,7 +149,7 @@ router.put("/:jobId/notes/:noteId", verifyToken, async (req, res)=>{
 
         await job.save();
 
-        res.status(200).json({message:"Note changed successfully!"})
+        res.status(200).json({message: "Note changed successfully!"})
 
     } catch(err){
 
