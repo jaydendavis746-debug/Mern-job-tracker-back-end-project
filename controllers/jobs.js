@@ -58,11 +58,19 @@ router.get("/:jobId", verifyToken, async (req, res)=>{
 router.put("/:jobId", verifyToken, async (req, res)=>{
     try{
 
-        const updatedJob = await Job.findOneAndUpdate( {"_id" : req.params.jobId, "employee" : req.user._id}, req.body,  { new: true, runValidators: true } ).populate("employee");
+        const updatedJob = await Job.findOneAndUpdate(
+            {
+            "_id" : req.params.jobId,
+            "employee" : req.user._id
+            },
+            req.body, {
+                new: true,
+                runValidators: true
+            }).populate("employee");
 
         if(!updatedJob){
 
-          return   res.status(404).json({message: "You are not authorised for this action!"});
+          return res.status(404).json({message: "You are not authorised for this action!"});
         }
 
         res.status(200).json(updatedJob);
