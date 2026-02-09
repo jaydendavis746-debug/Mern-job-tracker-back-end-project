@@ -32,7 +32,7 @@ router.get("/", verifyToken, async (req, res) => {
         res.status(200).json(jobs);
 
     } catch(err){
-        res.status(500).josn({err: err.message});
+        res.status(500).json({err: err.message});
     }
 });
 
@@ -42,8 +42,8 @@ router.get("/:jobId", verifyToken, async (req, res)=>{
         const job = await Job.findOne( {"_id" : req.params.jobId, "employee" : req.user._id} ).populate("employee");
 
         if(!job){
-
-           return  res.status(400).json({message: "Job not found"});
+//? Does below work better as: <return res.status(400).send({message: "Job not found"})>
+           return res.status(400).json({message: "Job not found"});
         } 
 
         res.status(200).json(job);
@@ -58,11 +58,19 @@ router.get("/:jobId", verifyToken, async (req, res)=>{
 router.put("/:jobId", verifyToken, async (req, res)=>{
     try{
 
-        const updatedJob = await Job.findOneAndUpdate( {"_id" : req.params.jobId, "employee" : req.user._id}, req.body,  { new: true, runValidators: true } ).populate("employee");
+        const updatedJob = await Job.findOneAndUpdate(
+            {
+            "_id" : req.params.jobId,
+            "employee" : req.user._id
+            },
+            req.body, {
+                new: true,
+                runValidators: true
+            }).populate("employee");
 
         if(!updatedJob){
-
-          return   res.status(404).json({message: "You are not authorised for this action!"});
+//? Does below work better as: <return res.status(404).send({message: "You are not authorised for this action!"})>
+          return res.status(404).json({message: "You are not authorised for this action!"});
         }
 
         res.status(200).json(updatedJob);
@@ -81,6 +89,7 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
         const deletedJob = await Job.findOneAndDelete({"_id" : req.params.jobId, "employee" : req.user._id});
 
         if(!deletedJob){
+//? Does below work better as: <return res.status(403).send({message : "You are not authorised to delete this!"})>
            return res.status(403).json({message : "You are not authorised to delete this!"});
         }
     
@@ -99,10 +108,12 @@ router.post("/:jobId/notes", verifyToken, async (req, res)=>{
         const job = await Job.findOne( {"_id" : req.params.jobId, "employee" : req.user._id} );
 
         if (!job) {
+//? Does below work better as: <return res.status(404).send[...]>
             return res.status(404).json({ message: "Job not found" });
         }
 
         if (!req.body.text) {
+//? Does below work better as: <return res.status(400).send[...]>
             return res.status(400).json({ message: "Note text is required" });
         }
 
@@ -112,9 +123,9 @@ router.post("/:jobId/notes", verifyToken, async (req, res)=>{
 
         await job.save();
 
-        const newNote = job.notes[job.notes.length -1]
+        const newNote = job.notes[job.notes.length -1];
 
-        res.status(201).json(newNote)
+        res.status(201).json(newNote);
 
 
     } catch(err){
@@ -138,11 +149,31 @@ router.put("/:jobId/notes/:noteId", verifyToken, async (req, res)=>{
 
         await job.save();
 
-        res.status(200).json({message:"Note changed successfully!"})
+        res.status(200).json({message: "Note changed successfully!"})
 
     } catch(err){
 
         res.status(500).json({err : err.message})
+    }
+});
+
+router.delete("/:jobId/notes/:noteId", verifyToken, async (req, res) => {
+    try {
+        const job = await Job.findById(req.params.jobId);
+
+        if (!job) {
+            return res.status(403).json({ message: "You are not authorised to edit this note" });
+        }
+
+        const note = job.notes.id(req.params.noteId);
+        note.text = req.body.text;
+
+        job.notes.remove({ _id: req.params.noteId });
+        await job.save();
+
+        res.status(200).json({ message: "Note deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ err: err.message });
     }
 });
 
