@@ -166,9 +166,9 @@ router.delete("/:jobId/notes/:noteId", verifyToken, async (req, res) => {
         }
 
         const note = job.notes.id(req.params.noteId);
-        note.text = req.body.text;
 
-        job.notes.remove({ _id: req.params.noteId });
+        note.deleteOne();
+        
         await job.save();
 
         res.status(200).json({ message: "Note deleted successfully" });
