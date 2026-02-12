@@ -100,6 +100,8 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
         res.status(500).json({err: err.message});
     }
 
+    });
+
 
     router.patch("/:jobId", verifyToken, async (req, res)=>{
 
@@ -117,9 +119,9 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
                 console.log(err)
             }
 
-    })
+    });
 
-});
+
 
 router.post("/:jobId/notes", verifyToken, async (req, res)=>{
     try{
