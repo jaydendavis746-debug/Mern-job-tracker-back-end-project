@@ -118,8 +118,7 @@ router.delete("/:jobId", verifyToken, async (req, res)=>{
             }catch(err){
                 console.log(err)
             }
-
-    });
+        });
 
 
 
