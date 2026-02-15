@@ -1,8 +1,4 @@
-# Mern-job-tracker-back-end-project
-Here is your **final backend README** with **drag & drop mentioned but without order persistence**.
-It is **copy-paste ready**.
 
----
 
 # 📦 CareerBoards API — Backend
 
