@@ -283,7 +283,7 @@ Test endpoints using:
 
 ---
 
-## 👤 AUTHOR
+## 👤 Author
 * Built by **jaydendavis746-debug** as a MERN portfolio project.
 * With the collaboration of ranjith-jacob
 
