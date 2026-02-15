@@ -272,6 +272,12 @@ Test endpoints using:
 * Include the JWT token for all protected routes.
 
 ---
+# 🔗 Frontend Repository
+
+The frontend repository can be found here:
+👉 [https://github.com/jaydendavis746-debug/Mern-job-tracker-front-end-project](https://github.com/jaydendavis746-debug/Mern-job-tracker-front-end-project)
+
+---
 
 ## 📌 Future Improvements
 
