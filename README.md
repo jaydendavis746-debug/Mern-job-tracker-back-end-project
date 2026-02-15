@@ -283,7 +283,9 @@ Test endpoints using:
 
 ---
 
-## 👤 jaydendavis746-debug
+## 👤 AUTHOR
+* Built by **jaydendavis746-debug** as a MERN portfolio project.
+* With the collaboration of ranjith-jacob
 
 **CareerBoards — MERN Job Tracker**
 Full-stack portfolio project demonstrating authentication, protected routes, kanban drag-and-drop status updates, and nested resources.
