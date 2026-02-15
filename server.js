@@ -10,7 +10,7 @@ const authRouter = require('./controllers/auth');
 const userRouter = require("./controllers/users");
 const jobsRouter = require("./controllers/jobs");
 
-const port = procees.env.PORT || 3000;
+
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -18,12 +18,7 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-app.use(cors({
-  origin: "https://careerboards.netlify.app",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,
-}));
-app.options("*", cors());
+app.use(cors());
 app.use(express.json());
 app.use(logger("dev"));
 
@@ -33,6 +28,8 @@ app.use("/test-jwt", testJwtRouter);
 app.use("/users", userRouter);
 app.use("/jobs", jobsRouter);
 
-app.listen(port, () => {
-  console.log("The express app is ready!");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`The express app is ready on port ${PORT}!`);
 });
