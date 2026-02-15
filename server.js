@@ -16,7 +16,10 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-app.use(cors());
+app.use(cors({
+  origin: "https://careerboards.netlify.app",
+  credentials: true
+}));
 app.options("*", cors());
 app.use(express.json());
 app.use(logger("dev"));
