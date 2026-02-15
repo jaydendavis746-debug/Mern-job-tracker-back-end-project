@@ -10,6 +10,8 @@ const authRouter = require('./controllers/auth');
 const userRouter = require("./controllers/users");
 const jobsRouter = require("./controllers/jobs");
 
+const port = procees.env.PORT || 300;
+
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on("connected", () => {
@@ -31,6 +33,6 @@ app.use("/test-jwt", testJwtRouter);
 app.use("/users", userRouter);
 app.use("/jobs", jobsRouter);
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("The express app is ready!");
 });
