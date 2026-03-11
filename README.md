@@ -271,7 +271,7 @@ Test endpoints using:
 # 🔗 Frontend Repository
 
 The frontend repository can be found here:
-👉 [https://github.com/jaydendavis746-debug/Mern-job-tracker-front-end-project](https://github.com/jaydendavis746-debug/Mern-job-tracker-front-end-project)
+👉 [job-tracker-front-end-project](https://github.com/jaydendavis746-debug/Mern-job-tracker-front-end-project)
 
 ---
 
